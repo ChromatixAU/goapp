@@ -49,11 +49,11 @@ For windows, you may need to get a version of make or use mingw32-make.exe
 * public - web root (Do not put things in here, items are copied from theme folder via 'npm run assets'
 * public/uploads - where uploads to the app is stored
 * node_modules - for node modules used for js/css/image asset pipeline
+* src/goapp/themes - theme base directory
 
 ### Application Theme
-You may want to have a separate GIT repository for the following
+You may want to have a separate GIT repository for your theme
 
-* src/goapp/themes - theme base directory
 * src/goapp/themes/default - default theme. To use a different theme set GO_THEME environment variable to name of directory, also update theme directory in package.json to new theme
 * src/goapp/themes/default/data - json files for static data per theme. Files end in .json
 * src/goapp/themes/default/templates - golang html templates used by render lib. Files end in .tmpl

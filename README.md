@@ -49,7 +49,6 @@ For windows, you may need to get a version of make or use mingw32-make.exe
 * public - web root (Do not put things in here, items are copied from theme folder via 'npm run assets'
 * public/uploads - where uploads to the app is stored
 * node_modules - for node modules used for js/css/image asset pipeline
-* src/core/templates - core templates of framework
 
 ### Application Theme
 You may want to have a separate GIT repository for the following

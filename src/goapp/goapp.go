@@ -23,9 +23,13 @@ func main() {
     log.Fatal("error writing to log: " + logfilename)
   }
   defer errorLog.Close()
+  theme := os.Getenv("GO_THEME")
+  if theme == "" {
+    theme = "default"
+  }
 
-  themeRender := render.New(render.Options{IsDevelopment: true, Directory: "theme/templates" })
-  coreRender := render.New(render.Options{IsDevelopment: true, Directory: "core/templates" })
+  themeRender := render.New(render.Options{IsDevelopment: true, Directory: "src/goapp/themes/" + theme + "/templates" })
+  coreRender := render.New(render.Options{IsDevelopment: true, Directory: "src/github.com/chromatixau/gocore/templates" })
   mux := http.NewServeMux()
   n := negroni.New()
   l := gomiddleware.NewLoggerWithStream( errorLog )
@@ -34,7 +38,7 @@ func main() {
   r.PrintStack = false
   baseRoute := os.Getenv("GOBASEROUTE")
 
-  handleRender(mux, themeRender, coreRender, l, baseRoute)
+  handleRender(mux, themeRender, coreRender, baseRoute, theme, l)
   s := gomiddleware.NewStatic(http.Dir("public"))
   if baseRoute != "" {
     s.Prefix = "/" + baseRoute
@@ -57,12 +61,12 @@ func main() {
   http.ListenAndServe( addr + port, n )
 }
 
-func handleRender(mux *http.ServeMux, themeRender *render.Render, coreRender *render.Render, logger gomiddleware.ALogger, base string) {
+func handleRender(mux *http.ServeMux, themeRender *render.Render, coreRender *render.Render, base string, theme string, logger gomiddleware.ALogger) {
   mux.HandleFunc( "/", func(w http.ResponseWriter, req *http.Request) {
     logger.Println( "start" )
     baseURI, prefix := getBaseURI(req, base, logger)
 
-    templateName, hasTemplate, isPublicFile := getTemplate(req, prefix, logger)
+    templateName, hasTemplate, isPublicFile := getTemplate(req, prefix, theme, logger)
     if isPublicFile == true {
       logger.Println( "public file" )
       return
@@ -71,7 +75,7 @@ func handleRender(mux *http.ServeMux, themeRender *render.Render, coreRender *re
       coreRender.HTML(w, http.StatusServiceUnavailable, "templateUnavailable", "")
       return
     }
-    data := loadData(req, templateName + ".json", baseURI, prefix, logger)
+    data := loadData(req, templateName + ".json", baseURI, prefix, theme, logger)
 
     themeRender.HTML(w, http.StatusOK, templateName, data)
   })
@@ -117,7 +121,7 @@ func getRequestVars(req *http.Request, baseRoute string, logger gomiddleware.ALo
 	return proto, host, prefix, path
 }
 
-func getTemplate(req *http.Request, baseURI string, logger gomiddleware.ALogger) (string, bool, bool) {
+func getTemplate(req *http.Request, baseURI string, theme string, logger gomiddleware.ALogger) (string, bool, bool) {
   logger.Println( "RequestURI Template: " + req.RequestURI )
   logger.Println( "BaseURI Template: " + baseURI )
 	templateName := strings.TrimSuffix(strings.TrimPrefix(req.RequestURI, "/" + baseURI), "/")
@@ -131,14 +135,14 @@ func getTemplate(req *http.Request, baseURI string, logger gomiddleware.ALogger)
   logger.Println( "Template Name: [" + templateName + "]" )
 	if templateName == "" {
 		templateName = "index"
-    hasTemplate = Exists( templateName, ".tmpl", "theme/templates", logger )
+    hasTemplate = Exists( templateName, ".tmpl", "src/goapp/themes/" + theme + "/templates", logger )
     isPublicFile = false
     return templateName, hasTemplate, isPublicFile
 	}
 
   isPublicFile = Exists( templateName, "", "public", logger )
   if false == isPublicFile {
-    hasTemplate = Exists( templateName, ".tmpl", "theme/templates", logger )
+    hasTemplate = Exists( templateName, ".tmpl", "src/goapp/themes/" + theme + "/templates", logger )
   }
   return templateName, hasTemplate, isPublicFile
 }
@@ -156,11 +160,11 @@ func Exists(name string, extension string, folder string, logger gomiddleware.AL
 }
 
 
-func loadData(req *http.Request, filename string, baseURI string, prefix string, logger gomiddleware.ALogger) interface{} {
+func loadData(req *http.Request, filename string, baseURI string, prefix string, theme string, logger gomiddleware.ALogger) interface{} {
   var raw []byte
   var data map[string]interface{}
   logger.Println( "datafile: " + filename )
-  raw, err := ioutil.ReadFile("theme/data/" + filename)
+  raw, err := ioutil.ReadFile("src/goapp/themes/" + theme + "/data/" + filename)
   if err != nil {
     data = make( map[string]interface{} )
   } else {

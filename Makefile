@@ -1,16 +1,19 @@
-PACKAGES= github.com/urfave/negroni github.com/unrolled/render github.com/chromatixau/gomiddleware
+# Application packages are for the logic of the app
+APPLICATION_PACKAGES=github.com/chromatixau/gocore github.com/chromatixau/gomiddleware
+PACKAGES=github.com/urfave/negroni github.com/unrolled/render
 
 all: build run
 
 
 build: clean
-	GOPATH=`pwd -P` go build -o $(PWD)/bin/goapp goapp.go
+	GOPATH=`pwd -P` go build -o $(PWD)/bin/goapp goapp
 
 clean:
 	rm -f bin/goapp
 
 install: uninstall 
 	GOPATH=`pwd -P` go get ${PACKAGES}
+	GOPATH=`pwd -P` go get ${APPLICATION_PACKAGES}
 
 uninstall:
 	rm -rf src/github.com

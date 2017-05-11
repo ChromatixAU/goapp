@@ -4,8 +4,12 @@ npm-debug.log*
 *.exe
 public/*
 !public/.gitkeep
+!public/css/.gitkeep
+!public/js/.gitkeep
+!public/images/.gitkeep
+!public/uploads/.gitkeep
 pkg/
-src/
+src/github.com/
 node_modules/
 bin/*
 !bin/.gitkeep

@@ -39,7 +39,6 @@ For windows, you may need to get a version of make or use mingw32-make.exe that 
 * src/goapp - main source directory
 
 ## Your Theme Setup
-You may want to have a separate GIT repository for your theme
 
 Setup your theme directory in the Makefile, replace:
 
@@ -50,6 +49,13 @@ With:
 * THEME=src/goapp/themes/yourthemename
 
 Change yourthemename to the name you want to use.
+
+You may want to have a separate GIT repository for your theme
+
+* cd src/goapp/themes/yourtheme
+* git init
+* git remote add origin [your-repository.git]
+* git push -u origin master
 
 ### Required Theme Directories
 * src/goapp/themes/yourthemename

@@ -1,5 +1,7 @@
 # GOAPP base
 
+Built by [Chromatix Digital Agency](https://www.chromatix.com.au)
+
 Important Note: This base is still in development, do not use in production unless you know what you're doing
 
 ## Prerequisites

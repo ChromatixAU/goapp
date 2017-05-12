@@ -17,11 +17,12 @@ For windows, you may need to get a version of make or use mingw32-make.exe
 
 ### Installation
 * npm install
+* make init
 * make install
+* make buildall
 
 ### Compile and Run
-* npm run assets
-* make
+* make build
 
 ## TODO
 
@@ -40,25 +41,34 @@ For windows, you may need to get a version of make or use mingw32-make.exe
 ## Directory Structure
 
 ### Golang core
-* src/github.com - 3rd party libs source
+* src/github.com - libs source
 * pkg - packaged 3rd party libs
 * bin - binaries
 
-### Goapp core
+### Goapp boilerplate
 * log - application logs
 * public - web root (Do not put things in here, items are copied from theme folder via 'npm run assets'
-* public/uploads - where uploads to the app is stored
-* node_modules - for node modules used for js/css/image asset pipeline
-* src/goapp/themes - theme base directory
+* uploads - where uploads to the app is stored WIP
+* node_modules - for node modules used for node-sass
+* src/goapp - main source directory
 
-### Application Theme
+## Your Theme Setup
 You may want to have a separate GIT repository for your theme
 
-* src/goapp/themes/default - default theme. To use a different theme set GO_THEME environment variable to name of directory, also update theme directory in package.json to new theme
-* src/goapp/themes/default/data - json files for static data per theme. Files end in .json
-* src/goapp/themes/default/templates - golang html templates used by render lib. Files end in .tmpl
-* src/goapp/themes/default/assets/js - theme js
-* src/goapp/themes/default/assets/css - theme css
-* src/goapp/themes/default/assets/images - theme images
-* src/goapp/themes/default/assets/files - other theme files
+Setup your theme directory in the Makefile, replace:
+* THEME=src/$(DEFAULT_THEME)
+with
+* THEME=src/goapp/themes/yourthemename
 
+Change yourthemename to the name you want to use.
+
+### Required Theme Directories
+* src/goapp/themes/yourthemename
+* src/goapp/themes/yourthemename/data - json files for static data per theme. Files end in .json
+* src/goapp/themes/yourthemename/templates - golang html templates used by render lib. Files end in .tmpl
+* src/goapp/themes/yourthemename/assets/js - theme js
+* src/goapp/themes/yourthemename/assets/css - theme css
+* src/goapp/themes/yourthemename/assets/images - theme images
+* src/goapp/themes/yourthemename/assets/files - other theme files
+
+Change yourthemename to the name you want to use.

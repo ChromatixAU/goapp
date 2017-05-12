@@ -4,6 +4,11 @@ DEFAULT_THEME=github.com/chromatixau/gotheme
 # you can replace default theme with your own git folder under src
 THEME=src/$(DEFAULT_THEME)
 
+# change this to the goapp.go file in your theme folder
+MAIN=src/goapp/goapp.go
+BINARY=goapp
+SERVICE=goapp
+
 all: buildall run
 
 init:
@@ -14,13 +19,13 @@ init:
 	mkdir uploads
 
 build: clean
-	GOPATH=`pwd -P` go build -o $(PWD)/bin/goapp goapp
+	GOPATH=`pwd -P` go build -o $(PWD)/bin/$(BINARY) $(MAIN)
 
 clean:
-	rm -f bin/goapp
+	rm -f bin/$(BINARY)
 
 run: build
-	GO_THEME=$(THEME) $(PWD)/bin/goapp
+	GO_THEME=$(THEME) $(PWD)/bin/$(BINARY)
 
 buildall: assets build
 
@@ -54,29 +59,29 @@ daemon: build restart
 daemonall: buildall restart
 
 cleansymlink:
-	sudo rm -f /usr/sbin/goapp
+	sudo rm -f /usr/sbin/$(BINARY)
 
 symlink: cleansymlink
-	sudo ln -s $(PWD)/bin/goapp /usr/sbin/goapp
+	sudo ln -s $(PWD)/bin/$(BINARY) /usr/sbin/$(BINARY)
 
 add: symlink 
-	sudo cp -f systemd/system/goapp.service /etc/systemd/system
+	sudo cp -f systemd/system/goapp.service /etc/systemd/system/$(SERVICE).service
 	sudo systemctl daemon-reload
 
 remove: disable
-	sudo rm -f /etc/systemd/system/goapp.service
+	sudo rm -f /etc/systemd/system/$(SERVICE).service
 
 enable: add
-	sudo systemctl enable goapp
+	sudo systemctl enable $(SERVICE)
 
 start:
-	sudo systemctl start goapp
+	sudo systemctl start $(SERVICE)
 
 stop:
-	sudo systemctl stop goapp
+	sudo systemctl stop $(SERVICE)
 
 restart:
-	sudo systemctl restart goapp
+	sudo systemctl restart $(SERVICE)
 
 disable:
-	sudo systemctl disable goapp
+	sudo systemctl disable $(SERVICE)

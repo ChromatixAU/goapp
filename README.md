@@ -7,9 +7,10 @@
 ## Dependencies
 
 * node-sass
-* github.com/urfave/negroni
-* github.com/unrolled/render
+* github.com/chromatixau/gotheme
 * github.com/chromatixau/gocore
+** github.com/urfave/negroni
+** github.com/unrolled/render
 
 ## Instructions
 

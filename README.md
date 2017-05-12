@@ -42,8 +42,11 @@ For windows, you may need to get a version of make or use mingw32-make.exe that 
 You may want to have a separate GIT repository for your theme
 
 Setup your theme directory in the Makefile, replace:
+
 * THEME=src/$(DEFAULT_THEME)
-with
+
+With:
+
 * THEME=src/goapp/themes/yourthemename
 
 Change yourthemename to the name you want to use.

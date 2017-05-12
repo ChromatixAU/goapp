@@ -8,9 +8,11 @@
 
 * node-sass
 * github.com/chromatixau/gotheme
+* github.com/chromatixau/goplugin
 * github.com/chromatixau/gocore
-** github.com/urfave/negroni
-** github.com/unrolled/render
+  * github.com/urfave/negroni
+  * github.com/unrolled/render
+  * github.com/chromatixau/gomiddleware
 
 ## Instructions
 

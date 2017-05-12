@@ -1,9 +1,17 @@
-# Application packages are for the logic of the app
-APPLICATION_PACKAGES=github.com/chromatixau/gocore github.com/chromatixau/gomiddleware
-PACKAGES=github.com/urfave/negroni github.com/unrolled/render
+CORE_PACKAGES=github.com/chromatixau/gocore
+DEFAULT_THEME=github.com/chromatixau/gotheme
 
-all: build run
+# you can replace default theme with your own git folder under src
+THEME=src/$(DEFAULT_THEME)
 
+all: buildall run
+
+init:
+	npm install
+	mkdir log
+	mkdir bin
+	mkdir public
+	mkdir uploads
 
 build: clean
 	GOPATH=`pwd -P` go build -o $(PWD)/bin/goapp goapp
@@ -11,20 +19,39 @@ build: clean
 clean:
 	rm -f bin/goapp
 
+run: build
+	GO_THEME=$(THEME) $(PWD)/bin/goapp
+
+buildall: assets build
+
+assets: cleanassets
+	cp -r $(THEME)/assets/images public
+	cp $(THEME)/assets/files/* public
+	cp -r $(THEME)/assets/js public
+	node_modules/node-sass/bin/node-sass $(THEME)/assets/scss --output public/css
+
+cleanassets:
+	rm -rf public
+	mkdir public
+	mkdir public/images
+	mkdir public/js
+	mkdir public/css
+
 install: uninstall 
-	GOPATH=`pwd -P` go get ${PACKAGES}
-	GOPATH=`pwd -P` go get ${APPLICATION_PACKAGES}
+	GOPATH=`pwd -P` go get ${CORE_PACKAGES}
+	GOPATH=`pwd -P` go get ${DEFAULT_THEME}
 
 uninstall:
 	rm -rf src/github.com
 
-run: build
-	$(PWD)/bin/goapp
 
 # the following are used for setting up a daemon via systemd
 # systemd service script not included
+# only use the following on linux
 
 daemon: build restart
+
+daemonall: buildall restart
 
 cleansymlink:
 	sudo rm -f /usr/sbin/goapp

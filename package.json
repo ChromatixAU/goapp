@@ -2,17 +2,10 @@
   "name": "goapp",
   "version": "1.0.0",
   "description": "This project assumes you have go and npm installed",
-  "main": "goapp.go",
-  "scripts": {
-    "js": "cp -r src/goapp/themes/default/assets/js public",
-    "images": "cp -r src/goapp/themes/default/assets/images public",
-    "files": "cp src/goapp/themes/default/assets/files/* public",
-    "sass": "node-sass src/goapp/themes/default/assets/scss --output public/css",
-    "assets" : "npm run js && npm run sass && npm run images && npm run files"
-  },
+  "main": "src/goapp/goapp.go",
   "author": "Julian Chan",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "node-sass": "^4.5.2"
   }
 }

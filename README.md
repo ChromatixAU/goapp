@@ -1,5 +1,7 @@
 # GOAPP base
 
+Important Note: This base is still in development, do not use in production unless you know what you're doing
+
 ## Prerequisites
 * go (golang)
 * npm (node) - for node-sass

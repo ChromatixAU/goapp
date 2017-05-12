@@ -2,18 +2,18 @@
 
 ## Prerequisites
 * go (golang)
-* npm (node)
+* npm (node) - for node-sass
 
 ## Dependencies
 
 * node-sass
 * github.com/urfave/negroni
 * github.com/unrolled/render
-* github.com/ChromatixAU/gomiddleware
+* github.com/chromatixau/gocore
 
 ## Instructions
 
-For windows, you may need to get a version of make or use mingw32-make.exe
+For windows, you may need to get a version of make or use mingw32-make.exe that comes with MINGW32
 
 ### Installation
 * npm install
@@ -23,20 +23,6 @@ For windows, you may need to get a version of make or use mingw32-make.exe
 
 ### Compile and Run
 * make build
-
-## TODO
-
-* Add Babel
-* Add Minification
-* Add React
-* Add Tests
-* Add Configuration System
-* Add file watch
-* Add Template Layouts
-* Add Routing
-* Add Database
-* Add Authentication
-* Add Linting
 
 ## Directory Structure
 
@@ -72,3 +58,19 @@ Change yourthemename to the name you want to use.
 * src/goapp/themes/yourthemename/assets/files - other theme files
 
 Change yourthemename to the name you want to use.
+
+## TODO
+
+* Add Babel
+* Add Minification
+* Add React
+* Add Tests
+* Add Configuration System
+* Add file watch
+* Add Template Layouts
+* Add Routing
+* Add Database
+* Add Authentication
+* Add Linting
+* Add Code Standard Testing
+

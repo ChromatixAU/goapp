@@ -40,7 +40,7 @@ For windows, you may need to get a version of make or use mingw32-make.exe that 
 
 ### Goapp boilerplate
 * log - application logs
-* public - web root (Do not put things in here, items are copied from theme folder via 'npm run assets'
+* public - web root (Do not put things in here, items are copied from theme folder via 'make assets'
 * uploads - where uploads to the app is stored WIP
 * node_modules - for node modules used for node-sass
 * src/goapp - main source directory
